@@ -1,97 +1,158 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import PhoneInput from "react-phone-input-2";
-import 'react-phone-input-2/lib/style.css';
+import "react-phone-input-2/lib/style.css";
+import { FaChevronRight } from "react-icons/fa";;
 
-const schema = z.object({
-  firstName: z.string().min(1, { message: "First name is requird!" }),
-  lastName: z.string().min(1, { message: "last name is requird!" }),
-  email: z.string().email({ message: "Invalid email eddress!" }),
-  phone: z.string().min(1, { message: "Phone is requird!" }),
-  birthDay: z.date({ message: "BirthDay is requird!" }),
-  destination: z.enum(
-    [
-      "UK",
-      "USA",
-      "Canada",
-      "Australia",
-      "New Zealand",
-      "Japan",
-      "China",
-      "Malaysia",
-    ],
-    { message: "destination is required" }
-  ),
-  elt: z.enum(
-    [
-      "IELTS",
-      "TOEFL",
-      "PT",
-      "Duolingo",
-      "Register for Exam",
-      "Taking Preparation",
-      "Yet to Appear",
-    ],
-    { message: "destination is required" }
-  ),
-  ini: z.enum(
-    [
-      "Jan-Feb 2026",
-      "Mar-Apr 2026",
-      "May-Jun 2026",
-      "Jul-Aug 2026",
-      "Sep-Oct 2026",
-      "Nov-Dec 20",
-      "Employer Scholarship",
-    ],
-    { message: "destination is required" }
-  ),
-  study: z.enum(
-    [
-      "English Language",
-      "School",
-      "Undergraduate",
-      "Postgraduate",
-      "Doctorate",
-      "Vocational",
-      "University Preparation",
-    ],
-    { message: "destination is required" }
-  ),
-  laststudy: z.enum(
-    [
-      "SSC",
-      "O-Level",
-      "Dakhil",
-      "HSC",
-      "A-Level",
-      "Alim",
-      "GED",
-      "Diploma",
-      "Bachelor",
-      "Fazil",
-      "Master’s",
-      "Kamil",
-    ],
-    { message: "destination is required" }
-  ),
-});
+const schema = z
+  .object({
+    firstName: z.string().min(1, { message: "First name is requird!" }),
+    lastName: z.string().min(1, { message: "last name is requird!" }),
+    email: z.string().email({ message: "Invalid email address!" }).optional(),
+    phone: z.coerce.string().min(1, { message: "Phone is required!" }),
+    destination: z.enum(
+      [
+        "UK",
+        "USA",
+        "Canada",
+        "Australia",
+        "Europe",
+        "New Zealand",
+        "Japan",
+        "China",
+        "Malaysia",
+      ],
+      { message: "Destination is required" }
+    ),
+    europeCountry: z.string().optional(),
+    elt: z.enum(
+      [
+        "IELTS",
+        "TOEFL",
+        "PTE",
+        "Duolingo",
+        "Register for Test",
+        "Taking Preparation",
+        "Waiting for Test Score",
+      ],
+      { message: "ELT is required" }
+    ),
+    eltScore: z.string().optional(),
+    ini: z
+      .enum(
+        [
+          "Jan-Feb 2026",
+          "Feb-Mar 2026",
+          "Mar-Apr 2026",
+          "Apr-May 2026",
+          "May-Jun 2026",
+          "Jun-Jul 2026",
+          "Jul-Aug 2026",
+          "Aug-Sep 2026",
+          "Sep-Oct 2026",
+          "Oct-Nov 2026",
+          "Nov-Dec 2026",
+        ],
+        { message: "Intake is required" }
+      )
+      .optional(),
+    study: z.enum(
+      [
+        "English Language",
+        "School",
+        "Vocational",
+        "Diploma",
+        "Undergraduate",
+        "Postgraduate",
+        "Doctorate",
+      ],
+      { message: "Study is required" }
+    ),
+    laststudy: z.enum(
+      [
+        "SSC",
+        "O-Level",
+        "Dakhil",
+        "HSC",
+        "A-Level",
+        "Alim",
+        "GED",
+        "Diploma",
+        "Bachelor",
+        "Fazil",
+        "Master’s",
+        "Kamil",
+      ],
+      { message: "Education is required" }
+    ),
+  })
+  .superRefine((data, ctx) => {
+    if (data.destination === "Europe" && !data.europeCountry) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["europeCountry"],
+        message: "Please select a European country",
+      });
+    }
+    if (
+      ["IELTS", "TOEFL", "PTE", "Duolingo"].includes(data.elt) &&
+      !data.eltScore
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["eltScore"],
+        message: "Please enter your test score",
+      });
+    }
+  });
 
 type FormData = z.infer<typeof schema>;
+
+const europeanCountries = [
+  "Austria", "Denmark", "France", "Italy", "Hungary", "Netherlands", "Norwya", "Spain", "Sweden", "Switzerland",
+];
 
 export const Form = () => {
   const {
     register,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      phone: "",
+    },
   });
+
+  const selectedDestination = watch("destination");
+  const selectedElt = watch("elt");
+  const selectedEuropeCountry = watch("europeCountry");
+
+  const [isDestinationDropdownOpen, setIsDestinationDropdownOpen] =
+    useState(false);
+  const [isEuropeHovered, setIsEuropeHovered] = useState(false);
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
+        setIsDestinationDropdownOpen(false);
+        setIsEuropeHovered(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   useEffect(() => {
     register("phone");
@@ -100,6 +161,25 @@ export const Form = () => {
   const onSubmit = (data: FormData) => {
     console.log(data);
   };
+
+  const handleEuropeCountrySelect = (country: string) => {
+    setValue("destination", "Europe", { shouldValidate: true });
+    setValue("europeCountry", country, { shouldValidate: true });
+    setIsDestinationDropdownOpen(false); // close dropdown after selection
+    setIsEuropeHovered(false);
+  };
+
+  const destinations = [
+    "UK",
+    "USA",
+    "Canada",
+    "Europe",
+    "Australia",
+    "New Zealand",
+    "Japan",
+    "China",
+    "Malaysia",
+  ];
 
   return (
     <form
@@ -138,9 +218,9 @@ export const Form = () => {
           {...register("email")}
           className="w-full border rounded p-2"
         />
-        {errors.email && (
+        {/* {errors.email && (
           <p className="text-red-500 text-sm">{errors.email.message}</p>
-        )}
+        )} */}
       </div>
 
       {/* Mobile */}
@@ -161,8 +241,8 @@ export const Form = () => {
         <div>
           <label className="block mb-1 font-medium">Last Education</label>
           <select
-            {...register("destination")}
-            className="w-full border rounded p-2"
+            {...register("laststudy")}
+            className="w-full border rounded p-2 h-10"
           >
             <option value="">Select</option>
             <option value="SSC">SSC</option>
@@ -178,88 +258,166 @@ export const Form = () => {
             <option value="Master’s">Master’s</option>
             <option value="Kamil">Kamil</option>
           </select>
-          {errors.destination && (
-            <p className="text-red-500 text-sm">{errors.destination.message}</p>
+          {errors.laststudy && (
+            <p className="text-red-500 text-sm">{errors.laststudy.message}</p>
           )}
         </div>
         <div>
           <label className="block mb-1 font-medium">
             Preferred Study Level
           </label>
-          <select {...register("study")} className="w-full border rounded p-2">
+          <select {...register("study")} className="w-full border rounded p-2 h-10">
             <option value="">Select</option>
             <option value="English Language">English Language</option>
             <option value="School">School</option>
+            <option value="Vocational">Vocational</option>
+            <option value="Diploma">Diploma</option>
             <option value="Undergraduate">Undergraduate</option>
             <option value="Postgraduate">Postgraduate</option>
             <option value="Doctorate">Doctorate</option>
-            <option value="Vocational">Vocational</option>
-            <option value="University Preparation">
-              University Preparation
-            </option>
           </select>
           {errors.study && (
             <p className="text-red-500 text-sm">{errors.study.message}</p>
           )}
         </div>
-        <div>
+        <div className="relative" ref={dropdownRef}>
           <label className="block mb-1 font-medium">
-            Preferred Study Destination
+            Preferred Destination
           </label>
-          <select
-            {...register("destination")}
-            className="w-full border rounded p-2"
+          <button
+            type="button"
+            onClick={() =>
+              setIsDestinationDropdownOpen(!isDestinationDropdownOpen)
+            }
+            className="w-full flex justify-between items-center border rounded p-2 text-left"
           >
-            <option value="">Select</option>
-            <option value="Australia">Australia</option>
-            <option value="Canada">Canada</option>
-            <option value="China">China</option>
-            <option value="Japan">Japan</option>
-            <option value="Malaysia">Malaysia</option>
-            <option value="New Zealand">New Zealand</option>
-            <option value="UK">UK</option>
-            <option value="USA">USA</option>
-          </select>
+            <span>
+              {selectedEuropeCountry || selectedDestination || "Select"}
+            </span>
+            <FaChevronRight className="h-4 w-4 rotate-90" />
+          </button>
+
+          {isDestinationDropdownOpen && (
+            <div className="absolute z-10 w-full mt-1 bg-white border rounded-md shadow-lg">
+              <ul className="py-1">
+                {destinations.map((dest) => (
+                  <li
+                    key={dest}
+                    className="relative group px-4 py-2 cursor-pointer hover:bg-gray-100"
+                    onMouseEnter={() =>
+                      dest === "Europe" && setIsEuropeHovered(true)
+                    }
+                    onMouseLeave={() =>
+                      dest === "Europe" && setIsEuropeHovered(false)
+                    }
+                    onClick={() => {
+                      if (dest !== "Europe") {
+                        setValue("destination", dest, { shouldValidate: true });
+                        setValue("europeCountry", "");
+                        setIsDestinationDropdownOpen(false);
+                      }
+                    }}
+                  >
+                    <div className="flex justify-between items-center">
+                      <span>{dest}</span>
+                      {dest === "Europe" && (
+                        <FaChevronRight className="h-4 w-4" />
+                      )}
+                    </div>
+
+                    {/* Europe submenu */}
+                    {dest === "Europe" && isEuropeHovered && (
+                      <ul className="absolute left-full top-0 ml-1 bg-white border rounded-md shadow-lg w-48 py-1">
+                        {europeanCountries.map((country) => (
+                          <li
+                            key={country}
+                            className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleEuropeCountrySelect(country);
+                            }}
+                          >
+                            {country}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
           {errors.destination && (
-            <p className="text-red-500 text-sm">{errors.destination.message}</p>
+            <p className="text-red-500 text-sm mt-1">
+              {errors.destination.message}
+            </p>
+          )}
+          {errors.europeCountry && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.europeCountry.message}
+            </p>
           )}
         </div>
 
-<div>
-        <label className="block mb-1 font-medium">Interested Intake</label>
-        <select {...register("ini")} className="w-full border rounded p-2">
-          <option value="">Select</option>
-          <option value="Jan-Feb 2026">Jan-Feb 2026</option>
-          <option value="Mar-Apr 2026">Mar-Apr 2026</option>
-          <option value="May-Jun 2026">May-Jun 2026</option>
-          <option value="Jul-Aug 2026">Jul-Aug 2026</option>
-          <option value="Sep-Oct 2026">Sep-Oct 2026</option>
-          <option value="Nov-Dec 2026">Nov-Dec 2026</option>
-        </select>
-        {errors.ini && (
-          <p className="text-red-500 text-sm">{errors.ini.message}</p>
-        )}
-      </div>
-        
-      </div>
-      
-      <div>
+        <div>
+          <label className="block mb-1 font-medium">Interested Intake</label>
+          <select {...register("ini")} className="w-full border rounded p-2 h-10">
+            <option value="">Next Available Intake</option>
+            <option value="Jan-Feb 2026">Jan-Feb 2026</option>
+            <option value="Feb-Mar 2026">Feb-Mar 2026</option>
+            <option value="Mar-Apr 2026">Mar-Apr 2026</option>
+            <option value="Apr-May 2026">Apr-May 2026</option>
+            <option value="May-Jun 2026">May-Jun 2026</option>
+            <option value="Jun-Jul 2026">Jun-Jul 2026</option>
+            <option value="Jul-Aug 2026">Jul-Aug 2026</option>
+            <option value="Aug-Sep 2026">Aug-Sep 2026</option>
+            <option value="Sep-Oct 2026">Sep-Oct 2026</option>
+            <option value="Oct-Nov 2026">Oct-Nov 2026</option>
+            <option value="Nov-Dec 2026">Nov-Dec 2026</option>
+          </select>
+          {/* {errors.ini && (
+            <p className="text-red-500 text-sm">{errors.ini.message}</p>
+          )} */}
+        </div>
+        <div>
           <label className="block mb-1 font-medium">
             English Language Certificate
           </label>
-          <select {...register("elt")} className="w-full border rounded p-2">
+          <select {...register("elt")} className="w-full border rounded p-2 h-10">
             <option value="">Select</option>
             <option value="IELTS">IELTS</option>
             <option value="TOEFL">TOEFL</option>
-            <option value="PT">PT</option>
-            <option value="register for exam">Register for Exam</option>
-            <option value="Taking preparation">Taking preparation</option>
-            <option value="Yet to appear">Yet to Appear</option>
+            <option value="PTE">PTE</option>
+            <option value="Duolingo">Duolingo</option>
+            <option value="Others">Others</option>
+            <option value="Taking Preparation">Taking Preparation</option>
+            <option value="Register for Test">Register for Test</option>
+            <option value="Waiting for Test Score">
+              Waiting for Test Score
+            </option>
           </select>
           {errors.elt && (
             <p className="text-red-500 text-sm">{errors.elt.message}</p>
           )}
         </div>
+        {["IELTS", "TOEFL", "PTE", "Duolingo"].includes(watch("elt")) && (
+          <div>
+            <label className="block mb-1 font-medium">Test Score</label>
+            <input
+              type="text"
+              {...register("eltScore", {
+                required: "Please enter your score",
+              })}
+              placeholder="Enter your score"
+              className="w-full border rounded p-2 h-10"
+            />
+            {errors.eltScore && (
+              <p className="text-red-500 text-sm">{errors.eltScore.message}</p>
+            )}
+          </div>
+        )}
+      </div>
+
       <div>
         <label className="inline-flex items-start space-x-2">
           <input type="checkbox" required className="mt-1 h-4 w-4" />

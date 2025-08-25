@@ -14,12 +14,12 @@ export default function page() {
         desired destination is our main motto. Just let us have little bit of
         you to enjoy the happiest flight ever!
       </p>
-      <div className="flex flex-row-reverse items-center justify-between m-7">
-        <div className="">
+      <div className="flex flex-col lg:flex-row-reverse items-center justify-between m-7 gap-6">
+        <div className="w-full lg:w-1/2">
           <Form />
         </div>
         <div>
-          <Image src="/person.png" alt="student" width={512} height={1000} />
+          <Image src="/sstudent.png" alt="student" width={512} height={1000} />
         </div>
       </div>
     </div>

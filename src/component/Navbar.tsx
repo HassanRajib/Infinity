@@ -15,6 +15,8 @@ export default function Navbar() {
     setIsMobileMenuOpen(false);
   };
 
+  const [showNumber, setShowNumber] = useState(false);
+
   return (
     <nav className="sticky top-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-600/50 shadow-lg shadow-gray-900/5 dark:shadow-black/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -68,10 +70,19 @@ export default function Navbar() {
 
             {/* Authentication - Desktop */}
             <div>
-              <button className="bg-lime-700 rounded-md text-white p-2.5">
-                Call Us
-              </button>
-            </div>
+      {showNumber ? (
+        <a href="tel:+880133 2527541" className="text-lg font-bold text-lime-700">
+          +880 1234-567890
+        </a>
+      ) : (
+        <button
+          onClick={() => setShowNumber(true)}
+          className="bg-lime-700 rounded-md text-white p-2.5"
+        >
+          Call Us
+        </button>
+      )}
+    </div>
 
             {/* Mobile Menu Button */}
             <button
