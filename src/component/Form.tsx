@@ -13,21 +13,22 @@ const schema = z
     firstName: z.string().min(1, { message: "First name is requird!" }),
     lastName: z.string().min(1, { message: "last name is requird!" }),
     email: z.string().email({ message: "Invalid email address!" }).optional(),
-    phone: z.coerce.string().min(1, { message: "Phone is required!" }),
-    destination: z.enum(
-      [
-        "UK",
-        "USA",
-        "Canada",
-        "Australia",
-        "Europe",
-        "New Zealand",
-        "Japan",
-        "China",
-        "Malaysia",
-      ],
-      { message: "Destination is required" }
-    ),
+    phone: z.string().min(1, { message: "Phone is required!" }),
+    destination: z.string().refine(
+  (val) =>
+    [
+      "Australia",
+      "Canada",
+      "China",
+      "Europe",
+      "Japan",
+      "Malaysia",
+      "New Zealand",
+      "UK",
+      "USA",
+    ].includes(val),
+  { message: "Destination is required" }
+),
     europeCountry: z.string().optional(),
     elt: z.enum(
       [
@@ -45,6 +46,7 @@ const schema = z
     ini: z
       .enum(
         [
+          "soon",
           "Jan-Feb 2026",
           "Feb-Mar 2026",
           "Mar-Apr 2026",
@@ -58,8 +60,7 @@ const schema = z
           "Nov-Dec 2026",
         ],
         { message: "Intake is required" }
-      )
-      .optional(),
+      ).optional(),
     study: z.enum(
       [
         "English Language",
@@ -84,7 +85,7 @@ const schema = z
         "Diploma",
         "Bachelor",
         "Fazil",
-        "Master’s",
+        "Master",
         "Kamil",
       ],
       { message: "Education is required" }
@@ -123,6 +124,7 @@ export const Form = () => {
     setValue,
     watch,
     formState: { errors },
+    reset,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -130,8 +132,10 @@ export const Form = () => {
     },
   });
 
+  const [statusMessage, setStatusMessage] = useState("");
+
   const selectedDestination = watch("destination");
-  const selectedElt = watch("elt");
+  // const selectedElt = watch("elt");
   const selectedEuropeCountry = watch("europeCountry");
 
   const [isDestinationDropdownOpen, setIsDestinationDropdownOpen] =
@@ -158,8 +162,26 @@ export const Form = () => {
     register("phone");
   }, [register]);
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
+  const onSubmit = async (data: FormData) => {
+    try {
+      const res = await fetch("http://localhost:8000/api/student", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+
+      if (result.success) {
+        setStatusMessage("Student info submitted successfully!");
+        reset(); // clear form after success
+      } else {
+        setStatusMessage("Failed to submit student info.");
+      }
+    } catch (err) {
+      console.error("Error submitting form:", err);
+      setStatusMessage("⚠️ Server error. Please try again.");
+    }
   };
 
   const handleEuropeCountrySelect = (country: string) => {
@@ -170,15 +192,15 @@ export const Form = () => {
   };
 
   const destinations = [
+    "Australia",
+    "Canada",
+    "China",
+    "Europe",
+    "Japan",
+    "Malaysia",
+    "New Zealand",
     "UK",
     "USA",
-    "Canada",
-    "Europe",
-    "Australia",
-    "New Zealand",
-    "Japan",
-    "China",
-    "Malaysia",
   ];
 
   return (
@@ -253,9 +275,9 @@ export const Form = () => {
             <option value="Alim">Alim</option>
             <option value="GED">GED</option>
             <option value="Diploma">Diploma(4 year)</option>
-            <option value="Bachelor's">Bachelor</option>
+            <option value="Bachelor">Bachelors</option>
             <option value="Fazil">Fazil</option>
-            <option value="Master’s">Master’s</option>
+            <option value="Master">Master</option>
             <option value="Kamil">Kamil</option>
           </select>
           {errors.laststudy && (
@@ -362,7 +384,8 @@ export const Form = () => {
         <div>
           <label className="block mb-1 font-medium">Interested Intake</label>
           <select {...register("ini")} className="w-full border rounded p-2 h-10">
-            <option value="">Next Available Intake</option>
+            <option value="">select</option>
+            <option value="soon">Next Available Intake</option>
             <option value="Jan-Feb 2026">Jan-Feb 2026</option>
             <option value="Feb-Mar 2026">Feb-Mar 2026</option>
             <option value="Mar-Apr 2026">Mar-Apr 2026</option>
@@ -433,6 +456,18 @@ export const Form = () => {
       >
         Submit
       </button>
+      {statusMessage && (
+    <p
+      className={`text-sm mt-2 ${
+        statusMessage.includes("success")
+          ? "text-green-600"
+          : "text-red-600"
+      }`}
+    >
+      {statusMessage}
+    </p>
+  )}
+
     </form>
   );
 };

@@ -72,7 +72,7 @@ export default function Navbar() {
             <div>
       {showNumber ? (
         <a href="tel:+880133 2527541" className="text-lg font-bold text-lime-700">
-          +880 1234-567890
+          +880133 2527541
         </a>
       ) : (
         <button

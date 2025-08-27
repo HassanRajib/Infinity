@@ -83,7 +83,7 @@ export default function FooTer() {
                   Services
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a
                   href="#"
                   className="text-black hover:text-gray-400 transition"
@@ -98,7 +98,7 @@ export default function FooTer() {
                 >
                   Blog
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
 
@@ -130,7 +130,7 @@ export default function FooTer() {
                   UI/UX Design
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a
                   href="#"
                   className="text-black hover:text-gray-400 transition"
@@ -145,7 +145,7 @@ export default function FooTer() {
                 >
                   Cloud Solutions
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
 
