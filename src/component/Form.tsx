@@ -33,6 +33,7 @@ const schema = z
     elt: z.enum(
       [
         "IELTS",
+        "IELTS UKVI",
         "TOEFL",
         "PTE",
         "Duolingo",
@@ -63,7 +64,6 @@ const schema = z
       ).optional(),
     study: z.enum(
       [
-        "English Language",
         "School",
         "Vocational",
         "Diploma",
@@ -100,7 +100,7 @@ const schema = z
       });
     }
     if (
-      ["IELTS", "TOEFL", "PTE", "Duolingo"].includes(data.elt) &&
+      ["IELTS", "IELTS UKVI", "TOEFL", "PTE", "Duolingo"].includes(data.elt) &&
       !data.eltScore
     ) {
       ctx.addIssue({
@@ -290,7 +290,6 @@ export const Form = () => {
           </label>
           <select {...register("study")} className="w-full border rounded p-2 h-10">
             <option value="">Select</option>
-            <option value="English Language">English Language</option>
             <option value="School">School</option>
             <option value="Vocational">Vocational</option>
             <option value="Diploma">Diploma</option>

@@ -84,6 +84,12 @@ export default function Navbar() {
       )}
     </div>
 
+    <button className="bg-lime-700 rounded-md text-white p-2.5 ">
+      <Link href="/sign">
+      <span>sign in</span>
+      </Link>
+    </button>
+
             {/* Mobile Menu Button */}
             <button
               onClick={toggleMobileMenu}
