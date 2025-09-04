@@ -1,57 +1,63 @@
 import React from "react";
 import { FaFacebook } from "react-icons/fa";
-import { FaTwitter } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
-import { FaLinkedin } from "react-icons/fa";
-import { IoAirplane } from "react-icons/io5";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function FooTer() {
   return (
     <footer className="text-black pt-12 pb-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 justify-between">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
           {/* Company Info */}
           <div className="space-y-4">
-            <div className="flex items-center">
+            {/* <div className="flex items-center">
               <IoAirplane className="h-8 w-8 text-red-600" />
               <span className="ml-2 text-xl font-bold">Infinity Pathwayz</span>
-            </div>
+            </div> */}
+            <Image
+                            src="/ilogo.png"
+                            alt="logo"
+                            width={300}
+                            height={80}
+                            className="flex items-start"
+                          />
             <p className="text-black">
-              Building innovative solutions for the modern world.
+              Our mission is to bridge the gap between ambitious students and world-class educational opportunities.
             </p>
             <div className="flex space-x-4">
               {/* Facebook */}
               <a
-                href="#"
+                href="https://www.facebook.com/InfinityPathwayz/"
                 className="text-black hover:text-gray-400 transition"
-                aria-label="Facebook"
+                aria-label="Facebook" target="_blank"
               >
                 <FaFacebook className="h-6 w-6" />
               </a>
               {/* Twitter */}
-              <a
+              {/* <a
                 href="#"
                 className="text-black hover:text-gray-400 transition"
                 aria-label="Twitter"
               >
                 <FaTwitter className="h-6 w-6" />
-              </a>
+              </a> */}
               {/* Instagram */}
               <a
-                href="#"
+                href="https://www.instagram.com/infinitypathwayz/"
                 className="text-black hover:text-gray-400 transition"
-                aria-label="Instagram"
+                aria-label="Instagram" target="_blank"
               >
                 <FaInstagram className="h-6 w-6" />
               </a>
               {/* LinkedIn */}
-              <a
+              {/* <a
                 href="#"
                 className="text-black hover:text-gray-400 transition"
                 aria-label="LinkedIn"
               >
                 <FaLinkedin className="h-6 w-6" />
-              </a>
+              </a> */}
             </div>
           </div>
 
@@ -59,14 +65,19 @@ export default function FooTer() {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">Quick Links</h3>
             <ul className="space-y-2">
-              <li>
+              {/* <li>
                 <a
                   href="#"
                   className="text-black hover:text-gray-400 transition"
                 >
                   Home
                 </a>
-              </li>
+              </li> */}
+              <Link
+              href="/"
+            >
+              <span className="text-black hover:text-gray-400 transition">Home</span>
+                 </Link>
               <li>
                 <a
                   href="#"
@@ -75,14 +86,21 @@ export default function FooTer() {
                   About Us
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a
                   href="#"
                   className="text-black hover:text-gray-400 transition"
                 >
                   Services
                 </a>
-              </li>
+              </li> */}
+              <Link
+              href="/contact"
+              
+            >
+              <span className="text-black hover:text-gray-400 transition">Contact</span>
+              
+            </Link>
               {/* <li>
                 <a
                   href="#"
@@ -103,7 +121,7 @@ export default function FooTer() {
           </div>
 
           {/* Services */}
-          <div className="space-y-4">
+          {/* <div className="space-y-4">
             <h3 className="text-lg font-semibold">Services</h3>
             <ul className="space-y-2">
               <li>
@@ -130,7 +148,7 @@ export default function FooTer() {
                   UI/UX Design
                 </a>
               </li>
-              {/* <li>
+              <li>
                 <a
                   href="#"
                   className="text-black hover:text-gray-400 transition"
@@ -145,9 +163,9 @@ export default function FooTer() {
                 >
                   Cloud Solutions
                 </a>
-              </li> */}
+              </li>
             </ul>
-          </div>
+          </div> */}
 
           {/* Contact */}
           <div className="space-y-4">

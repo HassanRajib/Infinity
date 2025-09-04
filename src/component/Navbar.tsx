@@ -15,10 +15,10 @@ export default function Navbar() {
     setIsMobileMenuOpen(false);
   };
 
-  const [showNumber, setShowNumber] = useState(false);
+  // const [showNumber, setShowNumber] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-600/50 shadow-lg shadow-gray-900/5 dark:shadow-black/30">
+    <nav className="sticky top-0 z-50 bg-white/35 dark:bg-gray-900/95 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-600/50 shadow-lg shadow-gray-900/5 dark:shadow-black/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16">
           {/* Logo Section */}
@@ -29,9 +29,9 @@ export default function Navbar() {
               onClick={closeMobileMenu}
             >
               <Image
-                src="/infinitylogo.png"
+                src="/ilogo.png"
                 alt="logo"
-                width={200}
+                width={300}
                 height={80}
               />
             </Link>
@@ -43,23 +43,23 @@ export default function Navbar() {
               href="/"
               className="relative text-gray-700 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400 px-3 lg:px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/20 group"
             >
-              <span className="relative z-10">Home</span>
+              <span className="relative z-10 font-bold text-lg">Home</span>
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-green-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
             </Link>
 
-            <Link
+            {/* <Link
               href="/about"
               className="relative text-gray-700 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400 px-3 lg:px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/20 group"
             >
               <span className="relative z-10">About</span>
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-green-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
-            </Link>
+            </Link> */}
 
             <Link
               href="/contact"
               className="relative text-gray-700 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400 px-3 lg:px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/20 group"
             >
-              <span className="relative z-10">Contact</span>
+              <span className="relative z-10 font-bold text-lg">Contact</span>
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-green-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
             </Link>
           </div>
@@ -69,7 +69,7 @@ export default function Navbar() {
             {/* Theme Toggle */}
 
             {/* Authentication - Desktop */}
-            <div>
+            {/* <div>
       {showNumber ? (
         <a href="tel:+880133 2527541" className="text-lg font-bold text-lime-700">
           +880133 2527541
@@ -82,9 +82,9 @@ export default function Navbar() {
           Call Us
         </button>
       )}
-    </div>
+    </div> */}
 
-    <button className="bg-lime-700 rounded-md text-white p-2.5 ">
+    <button className="bg-lime-700 rounded-md text-white p-2.5 hidden sm:block">
       <Link href="/sign">
       <span>sign in</span>
       </Link>
@@ -142,14 +142,14 @@ export default function Navbar() {
               <span className="text-base">🏠</span>
               <span>Home</span>
             </Link>
-            <Link
+            {/* <Link
               href="/about"
               className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/20 text-sm font-medium transition-all duration-200 active:scale-95"
               onClick={closeMobileMenu}
             >
               <span className="text-base">ℹ️</span>
               <span>About</span>
-            </Link>
+            </Link> */}
             <Link
               href="/contact"
               className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/20 text-sm font-medium transition-all duration-200 active:scale-95"

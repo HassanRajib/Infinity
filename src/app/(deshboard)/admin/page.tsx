@@ -25,10 +25,12 @@ export default function StudentsPage() {
   const [loading, setLoading] = useState(true);
   const [selectedDestination, setSelectedDestination] = useState<string>("ALL")
 
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const res = await fetch("http://localhost:8000/api/student"); // ✅ backend API
+        const res = await fetch(`${apiUrl}api/student`);
         const data = await res.json();
         setStudents(data);
       } catch (error) {

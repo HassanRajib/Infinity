@@ -4,8 +4,8 @@ import Image from "next/image";
 
 export default function page() {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
-      <h2 className="flex flex-row font-bold text-2xl mt-3">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 className="flex flex-row font-bold text-2xl my-3">
         Greetings
       </h2>
       <p>

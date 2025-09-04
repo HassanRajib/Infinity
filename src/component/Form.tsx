@@ -8,6 +8,8 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { FaChevronRight } from "react-icons/fa";;
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 const schema = z
   .object({
     firstName: z.string().min(1, { message: "First name is requird!" }),
@@ -164,7 +166,7 @@ export const Form = () => {
 
   const onSubmit = async (data: FormData) => {
     try {
-      const res = await fetch("http://localhost:8000/api/student", {
+      const res = await fetch(`${apiUrl}api/student`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -180,14 +182,14 @@ export const Form = () => {
       }
     } catch (err) {
       console.error("Error submitting form:", err);
-      setStatusMessage("⚠️ Server error. Please try again.");
+      setStatusMessage("Server error. Please try again.");
     }
   };
 
   const handleEuropeCountrySelect = (country: string) => {
     setValue("destination", "Europe", { shouldValidate: true });
     setValue("europeCountry", country, { shouldValidate: true });
-    setIsDestinationDropdownOpen(false); // close dropdown after selection
+    setIsDestinationDropdownOpen(false);
     setIsEuropeHovered(false);
   };
 

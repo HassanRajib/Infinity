@@ -31,10 +31,9 @@ function Page() {
                 </div>
             </div>
             <div className='p-8 rounded-xl '>
-              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3650.7296111484566!2d90.401579274393!3d23.792640987155234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c5f48770de5f%3A0x941f9947063cb15!2sVariation%20Communications%20Ltd.!5e0!3m2!1sen!2sbd!4v1756101201128!5m2!1sen!2sbd" width="650" height="550" className='rounded-lg shadow-md border-2 border-dashed'></iframe>
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3047.0277846391227!2d90.401574774393!3d23.792659987154497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c7400aefa411%3A0x1899a63bf1740cf8!2sInfinity%20Pathwayz!5e1!3m2!1sen!2sbd!4v1756968682447!5m2!1sen!2sbd" width="650" height="550" className='rounded-lg shadow-md border-2 border-dashed'></iframe>
             </div>
         </div>
-
     </div>
   )
 }
