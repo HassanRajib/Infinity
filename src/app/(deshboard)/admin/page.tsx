@@ -32,7 +32,7 @@ export default function StudentsPage() {
       try {
         const res = await fetch(`${apiUrl}api/student`);
         const data = await res.json();
-        setStudents(data);
+        setStudents(Array.isArray(data) ? data : data.students || []);
       } catch (error) {
         console.error("Error fetching students:", error);
       } finally {
@@ -41,7 +41,7 @@ export default function StudentsPage() {
     };
 
     fetchStudents();
-  }, []);
+  }, [apiUrl]);
 
   // 🔹 Generate PDF
   const downloadPDF = () => {
@@ -82,14 +82,16 @@ export default function StudentsPage() {
     XLSX.writeFile(workbook, "students.xlsx");
   };
 
-  const filteredStudents =
-    selectedDestination === "All"
-      ? students
-      : students.filter((s) => s.destination === selectedDestination);
+  const safeStudents = Array.isArray(students) ? students : [];
 
-    const destinations = Array.from(
-    new Set(students.map((s) => s.destination))
-  ).filter(Boolean);
+  const filteredStudents =
+  selectedDestination === "All"
+    ? safeStudents
+    : safeStudents.filter((s) => s.destination === selectedDestination);
+
+const destinations = Array.from(
+  new Set(safeStudents.map((s) => s.destination))
+).filter(Boolean);
 
   if (loading) return <p className="p-6 text-lg">Loading students...</p>;
 
@@ -148,25 +150,25 @@ export default function StudentsPage() {
             </tr>
           </thead>
           <tbody>
-            {students.map((student) => (
-              <tr key={student.id} className="hover:bg-gray-50">
-                <td className="px-4 py-2 border">{student.id}</td>
-                <td className="px-4 py-2 border">
-                  {student.first_name} {student.last_name}
-                </td>
-                <td className="px-4 py-2 border">{student.email}</td>
-                <td className="px-4 py-2 border">{student.phone}</td>
-                <td className="px-4 py-2 border">{student.last_study}</td>
-                <td className="px-4 py-2 border">{student.study}</td>
-                <td className="px-4 py-2 border">{student.ini}</td>
-                <td className="px-4 py-2 border">{student.destination === "Europe"
-    ? student.europe_country
-    : student.destination}</td>
-                <td className="px-4 py-2 border">{student.elt}</td>
-                <td className="px-4 py-2 border">{student.elt_score}</td>
-              </tr>
-            ))}
-          </tbody>
+  {(Array.isArray(students) ? students : []).map((student) => (
+    <tr key={student.id} className="hover:bg-gray-50">
+      <td className="px-4 py-2 border">{student.id}</td>
+      <td className="px-4 py-2 border">
+        {student.first_name} {student.last_name}
+      </td>
+      <td className="px-4 py-2 border">{student.email}</td>
+      <td className="px-4 py-2 border">{student.phone}</td>
+      <td className="px-4 py-2 border">{student.last_study}</td>
+      <td className="px-4 py-2 border">{student.study}</td>
+      <td className="px-4 py-2 border">{student.ini}</td>
+      <td className="px-4 py-2 border">
+        {student.destination === "Europe" ? student.europe_country : student.destination}
+      </td>
+      <td className="px-4 py-2 border">{student.elt}</td>
+      <td className="px-4 py-2 border">{student.elt_score}</td>
+    </tr>
+  ))}
+</tbody>
         </table>
       </div>
     </div>

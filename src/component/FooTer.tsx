@@ -176,10 +176,10 @@ export default function FooTer() {
               <p className="mt-2">
                 Email:{" "} 
                 <a
-                  href="mailto:info@company.com"
+                  href="mailto:infinity.pathwayz@variation.com"
                   className="hover:text-gray-400 transition"
                 >
-                  info@company.com
+                  infinity.pathwayz@variation.com
                 </a>
               </p>
               <p>

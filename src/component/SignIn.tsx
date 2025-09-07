@@ -24,6 +24,8 @@ const SignIn: React.FC = () => {
     setErrors({ ...errors, [id]: "" });
   };
 
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -43,7 +45,7 @@ const SignIn: React.FC = () => {
     if (!isValid) return;
 
     try {
-      const response = await axios.post("http://localhost:8000/api/admin/login", {
+      const response = await axios.post(`${apiUrl}api/admin/login`, {
         username: formData.username,
         password: formData.password,
       });

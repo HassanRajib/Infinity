@@ -7,7 +7,7 @@ import { SiGooglemaps } from "react-icons/si";
 
 function Page() {
   return (
-    <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+    <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-4'>
         <div className='grid md:grid-cols-2 gap-12 items-center'>
             <div>
                 <h2 className='text-3xl font-bold mb-6'> 
@@ -30,8 +30,8 @@ function Page() {
                   Block# C, Banani, Dhaka-1213.</p>
                 </div>
             </div>
-            <div className='p-8 rounded-xl '>
-              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3047.0277846391227!2d90.401574774393!3d23.792659987154497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c7400aefa411%3A0x1899a63bf1740cf8!2sInfinity%20Pathwayz!5e1!3m2!1sen!2sbd!4v1756968682447!5m2!1sen!2sbd" width="650" height="550" className='rounded-lg shadow-md border-2 border-dashed'></iframe>
+            <div className='rounded-xl '>
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3047.0277846391227!2d90.401574774393!3d23.792659987154497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c7400aefa411%3A0x1899a63bf1740cf8!2sInfinity%20Pathwayz!5e1!3m2!1sen!2sbd!4v1756968682447!5m2!1sen!2sbd" width="550" height="450" className='rounded-lg shadow-md border-2 border-dashed'></iframe>
             </div>
         </div>
     </div>
