@@ -19,7 +19,7 @@ export default function page() {
           <Form />
         </div>
         <div>
-          <Image src="/sstudent.png" alt="student" width={512} height={1000} />
+          <Image src="/students.png" alt="student" width={512} height={1000} />
         </div>
       </div>
     </div>

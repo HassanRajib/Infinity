@@ -18,7 +18,7 @@ export default function Navbar() {
   // const [showNumber, setShowNumber] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/35 dark:bg-gray-900/95 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-600/50 shadow-lg shadow-gray-900/5 dark:shadow-black/30">
+    <nav className="sticky top-0 z-50 bg-white/35 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-600/50 shadow-lg shadow-gray-900/5 dark:shadow-black/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16">
           {/* Logo Section */}
@@ -41,7 +41,7 @@ export default function Navbar() {
           <div className="hidden md:flex items-center space-x-1">
             <Link
               href="/"
-              className="relative text-gray-700 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400 px-3 lg:px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/20 group"
+              className="relative text-gray-700 hover:text-emerald-600 dark:hover:text-emerald-400 px-3 lg:px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/20 group"
             >
               <span className="relative z-10 font-bold text-lg">Home</span>
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-green-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
@@ -57,7 +57,7 @@ export default function Navbar() {
 
             <Link
               href="/contact"
-              className="relative text-gray-700 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400 px-3 lg:px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/20 group"
+              className="relative text-gray-700 hover:text-emerald-600 dark:hover:text-emerald-400 px-3 lg:px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/20 group"
             >
               <span className="relative z-10 font-bold text-lg">Contact</span>
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-green-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
@@ -86,7 +86,7 @@ export default function Navbar() {
 
     <button className="bg-lime-700 rounded-md text-white p-2.5 hidden sm:block">
       <Link href="/sign">
-      <span>sign in</span>
+      <span>Sign In</span>
       </Link>
     </button>
 
@@ -132,11 +132,11 @@ export default function Navbar() {
               : "max-h-0 opacity-0 overflow-hidden"
           }`}
         >
-          <div className="px-2 pt-2 pb-3 space-y-1 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl border border-gray-200/50 dark:border-gray-600/50 mt-2 shadow-lg">
+          <div className="px-2 pt-2 pb-3 space-y-1 bg-white/80 backdrop-blur-sm rounded-xl border border-gray-200/50 dark:border-gray-600/50 mt-2 shadow-lg">
             {/* Mobile Navigation Links */}
             <Link
               href="/"
-              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/20 text-sm font-medium transition-all duration-200 active:scale-95"
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/20 text-sm font-medium transition-all duration-200 active:scale-95"
               onClick={closeMobileMenu}
             >
               <span className="text-base">🏠</span>
@@ -152,7 +152,7 @@ export default function Navbar() {
             </Link> */}
             <Link
               href="/contact"
-              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/20 text-sm font-medium transition-all duration-200 active:scale-95"
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/20 text-sm font-medium transition-all duration-200 active:scale-95"
               onClick={closeMobileMenu}
             >
               <span className="text-base">📞</span>
